@@ -1,5 +1,4 @@
 <template>
-  <div v-for="item in items" :key="item.id">
     <template v-if="hasChildren(item)">
         <div>
             <div class="spacer" :style="`width: ${level*1}rem`" />
@@ -7,21 +6,20 @@
             {{ item.name }}
         </div>
         <div v-show="!toggle">
-            <recursive-list-items :items="item.children" :level="level+1" />
+            <recursive-list-item v-for="child in item.children" :item="child" :level="level+1" :key="child.id" />
         </div>
     </template>
     <template v-else>
-      <div>
-          <div class="spacer" :style="`width: ${level*1}rem`" /><div class="bullet">•</div>
-          {{ item.name }}
-      </div>
+        <div>
+            <div class="spacer" :style="`width: ${level*1}rem`" /><div class="bullet">•</div>
+            {{ item.name }}
+        </div>
     </template>
-  </div>
 </template>
 
 <script>
 export default {
-    name: "RecursiveListItems",
+    name: "RecursiveListItem",
     data() {
         return {
             toggle: false
@@ -29,7 +27,7 @@ export default {
     },
 
     props: {
-        items: {
+        item: {
             required: true,
             type: Array
         },
