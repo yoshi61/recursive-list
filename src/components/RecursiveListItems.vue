@@ -3,10 +3,10 @@
     <template v-if="hasChildren(item)">
         <div>
             <div class="spacer" :style="`width: ${level*1}rem`" />
-            <div class="bullet">▼</div>
+            <div class="toggle-icon bullet" @click="toggle = !toggle">{{ toggle? "▶" : "▼" }} </div>
             {{ item.name }}
         </div>
-        <div>
+        <div v-show="!toggle">
             <recursive-list-items :items="item.children" :level="level+1" />
         </div>
     </template>
@@ -22,6 +22,11 @@
 <script>
 export default {
     name: "RecursiveListItems",
+    data() {
+        return {
+            toggle: false
+        };
+    },
 
     props: {
         items: {
@@ -49,5 +54,8 @@ export default {
 }
 .spacer {
     display: inline-block;
+}
+.toggle-icon {
+    cursor: pointer;
 }
 </style>
