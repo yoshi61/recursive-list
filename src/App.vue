@@ -1,19 +1,25 @@
 <template>
-  <p>
-    Please build the structure you see in <code>PageTree.png</code> in the file
-    explorer.
-  </p>
-  <p>
-    The data for this structure should be loaded from <code>fetchData.js</code>.
-  </p>
-  <p>Useful icon characters are ▼ ▶ •</p>
+    <div v-for="item in listData" :key="item.id">
+        {{item}}
+    </div>
 </template>
 
 <script>
+import { fetchData } from "./fetchData.js";
 export default {
-  name: "App",
+    name: "App",
+    data() {
+        return {
+            listData: [],
+        };
+    },
+    async mounted() {
+        // init data
+        await fetchData().then((data) => {
+            this.listData = data;
+        });
+    },
 };
 </script>
 
-<style>
-</style>
+<style></style>
