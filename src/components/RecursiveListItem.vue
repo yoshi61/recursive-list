@@ -2,11 +2,11 @@
     <template v-if="hasChildren(item)">
         <div>
             <div class="spacer" :style="`width: ${level*1}rem`" />
-            <div class="toggle-icon bullet" @click="toggle = !toggle">{{ toggle? "▶" : "▼" }} </div>
+            <div class="toggle-icon bullet" @click="expand = !expand">{{ expand? "▼" : "▶" }} </div>
             {{ item.name }}
         </div>
-        <div v-show="!toggle">
-            <recursive-list-item v-for="child in item.children" :item="child" :level="level+1" :key="child.id" />
+        <div v-show="expand">
+            <recursive-list-item v-for="child in item.children" :item="child" :level="level+1" :parentExpand="expand" :key="child.id" />
         </div>
     </template>
     <template v-else>
@@ -22,25 +22,36 @@ export default {
     name: "RecursiveListItem",
     data() {
         return {
-            toggle: false
-        };
+            expand: true
+        }
     },
 
     props: {
         item: {
             required: true,
-            type: Array
+            type: Object
         },
         level: {
             type:Number,
             default: 0
+        },
+        parentExpand: {
+            type: Boolean,
+            default: false
+        }
+    },
+    watch: {
+        parentExpand(v) {
+            if(!v) {
+                this.expand = false;
+            }
         }
     },
     methods: {
         hasChildren(item) {
             return item?.children && item?.children.length > 0;
         }
-    }
+    },
 }
 </script>
 
