@@ -1,13 +1,15 @@
 <template>
-    <div v-for="item in listData" :key="item.id">
-        {{item}}
-    </div>
+    <recursive-list-items :items="listData"></recursive-list-items>
 </template>
 
 <script>
 import { fetchData } from "./fetchData.js";
+import RecursiveListItems from "./components/RecursiveListItems";
 export default {
     name: "App",
+    components: {
+        RecursiveListItems
+    },
     data() {
         return {
             listData: [],
