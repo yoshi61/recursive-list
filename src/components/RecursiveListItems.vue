@@ -2,6 +2,8 @@
   <div v-for="item in items" :key="item.id">
     <template v-if="hasChildren(item)">
         <div>
+            <div class="spacer" :style="`width: ${level*1}rem`" />
+            <div class="bullet">▼</div>
             {{ item.name }}
         </div>
         <div>
@@ -10,6 +12,7 @@
     </template>
     <template v-else>
       <div>
+          <div class="spacer" :style="`width: ${level*1}rem`" /><div class="bullet">•</div>
           {{ item.name }}
       </div>
     </template>
@@ -38,5 +41,13 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+.bullet {
+    display: inline-block;
+    text-align: center;
+    width: 1rem;
+}
+.spacer {
+    display: inline-block;
+}
 </style>
